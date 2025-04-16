@@ -97,6 +97,11 @@ void P_Clear(P_Window* window, P_Image image, P_Color color) {
   }
 }
 
+int P_KeyPress(SDL_Scancode key) {
+    const Uint8 *state = SDL_GetKeyboardState(NULL);
+    return state[key];
+}
+
 int P_Done() {
   SDL_Event e;
   while (SDL_PollEvent(&e)) {
