@@ -20,6 +20,7 @@ Note if any of the above links 404, those projects are still private repos in de
 # TODO
 There's a few things I'd like to do to improve this project in the future
 
+- Improve keypress logic
 - Create simplified functions for windows where pixels are 1:1 with screen pixels
 - Explore storing the pixels in a single array instead of a 2D array, since this may be faster for low-resolution renderings
 - Bundle window and image, their differences make sense with SDL2 but I want the library to be as simple as possible, so there's not much reason to keep them separate and not bundled into one structure except to allow for double-buffering, which may be beyond the scope.
