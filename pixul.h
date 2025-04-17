@@ -111,7 +111,7 @@ int P_KeyPress(SDL_Scancode key) {
     if (!pressed[key]) {
       pressed[key] = true;
       return 1;
-    } else pressed[key] = false;
+    }
   }
   else pressed[key] = false;
   return 0;
