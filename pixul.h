@@ -25,15 +25,17 @@ typedef struct P_Window_t {
   P_Image image;
 } P_Window;
 
+P_Window* window;
+
 const Uint8* keys;
 bool* pressed;
 
-void P_Create(char* title, P_Window* window, int width, int height, int pixel_width, int pixel_height) {
+void P_Create(char* title, int width, int height, int pixel_width, int pixel_height) {
   if (SDL_Init(SDL_INIT_VIDEO) != 0) {
     fprintf(stderr, "[SDL_Init Error] %s\n", SDL_GetError());
     return;
   }
-
+  window = malloc(sizeof(P_Window));
   window->w  = width;
   window->h  = height;
   window->pw = pixel_width;
@@ -65,18 +67,24 @@ void P_Create(char* title, P_Window* window, int width, int height, int pixel_wi
   pressed = calloc(512, sizeof(bool));
 }
 
-void P_Destroy(P_Window* window) {
+void P_DestroyImage(P_Image image) {
   for (int i = 0; i < window->pw; i++) {
-    free(window->image[i]);
+    free(image[i]);
   }
   free(window->image);
+}
+
+void P_Destroy() {
+  P_DestroyImage(window->image);
+
+  free(pressed);
 
   SDL_DestroyRenderer(window->renderer);
   SDL_DestroyWindow(window->window);
   SDL_Quit();
 }
 
-void P_Update(P_Window* window) {
+void P_Update() {
   SDL_SetRenderDrawColor(window->renderer, 255, 255, 255, 255);
   SDL_RenderClear(window->renderer);
 
@@ -91,7 +99,7 @@ void P_Update(P_Window* window) {
   SDL_RenderPresent(window->renderer);
 }
 
-void P_Clear(P_Window* window, P_Color color) {
+void P_Clear(P_Color color) {
   for (int i = 0; i < window->pw; i++) {
     for (int j = 0; j < window->ph; j++) {
       window->image[i][j].r = color.r;
@@ -129,7 +137,7 @@ int P_Done() {
   return 0;
 }
 
-void P_Set(P_Window* window, int x, int y, P_Color color) {
+void P_Set(int x, int y, P_Color color) {
   if (x < 0 || y < 0 || x >= window->pw || y >= window->ph) return;
   window->image[x][y].r = color.r;
   window->image[x][y].g = color.g;
@@ -137,7 +145,8 @@ void P_Set(P_Window* window, int x, int y, P_Color color) {
   window->image[x][y].a = color.a;
 }
 
-void P_SetImage(P_Window* window, P_Image image) {
+void P_SetImage(P_Image image) {
+  P_DestroyImage(window->image);
   window->image = image;
 }
 
