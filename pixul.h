@@ -145,6 +145,18 @@ void P_Set(int x, int y, P_Color color) {
   window->image[x][y].a = color.a;
 }
 
+void P_SetVerLine(int x, int y_start, int y_end, P_Color color) {
+  for (int y = y_start; y < y_end; y++) {
+    P_Set(x, y, color);
+  }
+}
+
+void P_SetHorLine(int x_start, int x_end, int y, P_Color color) {
+  for (int x = x_start; x < x_end; x++) {
+    P_Set(x, y, color);
+  }
+}
+
 void P_SetImage(P_Image image) {
   P_DestroyImage(window->image);
   window->image = image;
