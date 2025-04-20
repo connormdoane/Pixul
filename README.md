@@ -21,5 +21,6 @@ Note if any of the above links 404, those projects are still private repos in de
 # TODO
 There's a few things I'd like to do to improve this project in the future
 
+- Add additional functions for timing so logic timing can be separated from frame redrawing (to allow for better keybinds)
 - Create simplified functions for windows where pixels are 1:1 with screen pixels
 - Explore storing the pixels in a single array instead of a 2D array, since this may be faster for low-resolution renderings
